@@ -200,7 +200,7 @@ bool writeFourier(vector<double> hz, vector<dcomp> F)
     // Write Headers
     
     fout << "Frequency,Magnitude,,Real,Imag" << endl;
-    fout << ",,," << endl;
+    fout << ",,,," << endl;
     
     for (int i = 0; i < hz.size(); i++)
     {
