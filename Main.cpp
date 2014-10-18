@@ -13,6 +13,7 @@ typedef complex<double> dcomp;
 string initpath = "init.cfg";
 string inpath = "data.csv";
 string outpath = "fourier.csv";
+bool error = false;
 int t_col = 1;
 int x_col = 2;
 int row_1 = 1;
@@ -173,6 +174,7 @@ vector< vector<double> > loadData()
             else
             {
                 cout << "Error: Could not read row " << (i+1) << endl;
+                error = true;
                 break;
             }
         }          
@@ -180,6 +182,7 @@ vector< vector<double> > loadData()
     else
     {
         cout << "Error: could not read " << inpath << endl;
+        error = true;
     }
     return data;
 }
@@ -235,30 +238,33 @@ int main()
         // Load Data
         
         data = loadData();
-        N = row_2 - row_1 + 1;
-        dt = data[0][1] - data[0][0];
-        time_span = N * dt;
-        cout << "Loaded data: " << endl;
-        cout << "t_col = " << t_col << endl;
-        cout << "x_col = " << x_col << endl;
-        cout << "rows = " << row_1 << " " << row_2 << endl;
-        cout << "N = " << N << endl;
-        cout << "dt = " << dt << endl;
-        cout << "time_span = " << time_span << endl;
-        
-        // Convert x values to complex
-        
-        for (int i = 0; i < N; i++)
-            x.push_back(data[1][i]);
-        
-        // Compute the Fourier transform
-        
-        hz = dft.fdomain(time_span, N);
-        F = dft.fft(x, N);
-        F = dft.fourierCoeffs(F, N); // Scale magnitudes to amplitude coefficients
-        
-        // Output results
-        
-        writeFourier(hz, F);        
+        if (!error)
+        {        
+            N = row_2 - row_1 + 1;
+            dt = data[0][1] - data[0][0];
+            time_span = N * dt;
+            cout << "Loaded data: " << endl;
+            cout << "t_col = " << t_col << endl;
+            cout << "x_col = " << x_col << endl;
+            cout << "rows = " << row_1 << " " << row_2 << endl;
+            cout << "N = " << N << endl;
+            cout << "dt = " << dt << endl;
+            cout << "time_span = " << time_span << endl;
+            
+            // Convert x values to complex
+            
+            for (int i = 0; i < N; i++)
+                x.push_back(data[1][i]);
+            
+            // Compute the Fourier transform
+            
+            hz = dft.fdomain(time_span, N);
+            F = dft.fft(x, N);
+            F = dft.fourierCoeffs(F, N); // Scale magnitudes to amplitude coefficients
+            
+            // Output results
+            
+            writeFourier(hz, F);   
+        }
     }
 }
