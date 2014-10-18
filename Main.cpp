@@ -3,8 +3,9 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-
 #include <vector>
+#include <conio.h>
+
 #include "Dft.h"
 
 using namespace std;
@@ -267,4 +268,7 @@ int main()
             writeFourier(hz, F);   
         }
     }
+    
+    cout << "Press any key to exit.";
+    getch();
 }
