@@ -199,7 +199,7 @@ bool writeFourier(vector<double> hz, vector<dcomp> F)
     
     // Write Headers
     
-    fout << "Frequency,Magnitude,,Real,Imag" << endl;
+    fout << "Frequency,Amplitude,,Real,Imag" << endl;
     fout << ",,,," << endl;
     
     for (int i = 0; i < hz.size(); i++)
@@ -255,6 +255,7 @@ int main()
         
         hz = dft.fdomain(time_span, N);
         F = dft.fft(x, N);
+        F = dft.fourierCoeffs(F, N); // Scale magnitudes to amplitude coefficients
         
         // Output results
         
